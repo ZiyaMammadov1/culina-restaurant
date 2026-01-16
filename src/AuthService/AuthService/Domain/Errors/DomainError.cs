@@ -1,4 +1,6 @@
-﻿namespace AuthService.Domain.Errors
+﻿
+
+namespace AuthService.Domain.Errors
 {
     public class DomainErrors : IDomainError
     {
@@ -16,5 +18,10 @@
         public static DomainErrors EmptyUsername => new("uername.empty");
         public static DomainErrors LengthUsername => new("username.insufficientLenght");
 
+        public List<IError> Reasons => new();
+
+        public string Message => this.ErrorCode;
+
+        public Dictionary<string, object> Metadata => new();
     }
 }

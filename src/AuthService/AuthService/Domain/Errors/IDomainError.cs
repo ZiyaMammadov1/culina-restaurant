@@ -1,6 +1,6 @@
 ﻿namespace AuthService.Domain.Errors
 {
-    public interface IDomainError
+    public interface IDomainError : IError
     {
         string? ErrorCode { get; init; }
     }
