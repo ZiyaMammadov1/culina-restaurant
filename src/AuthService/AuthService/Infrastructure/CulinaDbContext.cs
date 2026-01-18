@@ -1,4 +1,4 @@
-﻿using AuthService.Domain.Entities;
+﻿using AuthService.Infrastructure.Persistence.Entities;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
@@ -10,7 +10,7 @@ namespace AuthService.Infrastructure
         {
         }
 
-        public DbSet<User> Users { get; set; }
+        public DbSet<UserEntity> Users { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
