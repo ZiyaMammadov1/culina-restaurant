@@ -17,16 +17,17 @@
    - Based on JSON Web Token`(JWT)`
    - `Authorization` and `Authentication` process
 
-   - Domain
+- Domain
    > Core - Rich domain models, Result pattern (railway oriented) approach, factory method design pattern, typesafe provision                with Value object, carrier of domain logic
 
    > Core error handler - Generic domain error and its various applications
-
-   - Application
+   
+- Application
    > Core - Abstract repositories of domain models and use cases that connect domain models to them
+   
    > Core error handler - With Result Pattern
    
-   - Infrastructure
+- Infrastructure
    > Core - Base context. Base models. Profile list that converts rich domain models into entity models.
             İmplementation of Repositories in the Application layer
    
