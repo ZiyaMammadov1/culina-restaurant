@@ -32,6 +32,8 @@
             İmplementation of Repositories in the Application layer
    
 
+## 📊 Logging
 
-   
+   > Log Mechanizm
+         Implementation SeriLog based on appsettings.json configuration file. Sending logs to console and SEQ. Masking confidential data.
 

@@ -14,5 +14,18 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
+  seq:
+    image: datalust/seq:latest
+    container_name: seq
+    restart: unless-stopped
+    environment:
+      - ACCEPT_EULA=Y
+      - SEQ_PASSWORD=1234
+    ports:
+      - "5431:80" 
+
 volumes:
   postgres_data:
+
+
+# SEQ docker credential admin / 12345678
