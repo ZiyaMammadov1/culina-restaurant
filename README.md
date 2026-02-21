@@ -37,6 +37,6 @@
    > Log Mechanizm
          Implementation SeriLog based on appsettings.json configuration file. Sending logs to console and SEQ. Masking confidential data.
 
-# <img width="10" height="10" alt="image" src="https://github.com/user-attachments/assets/5236f884-0956-4aff-b614-b28d8013496c" />
+# <img width="50" height="50" alt="image" src="https://github.com/user-attachments/assets/5236f884-0956-4aff-b614-b28d8013496c" />
 General Architecture
 [View Clean Architecture Diagram on Miro](https://miro.com/app/board/uXjVG8ul8Cw=/)
