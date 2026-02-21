@@ -37,5 +37,4 @@
    > Log Mechanizm
          Implementation SeriLog based on appsettings.json configuration file. Sending logs to console and SEQ. Masking confidential data.
 
-<iframe width="800" height="600" src="https://miro.com/app/board/uXjVG8ul8Cw=/embed" frameborder="0" allowfullscreen></iframe>
-
+[View Clean Architecture Diagram on Miro](https://miro.com/app/board/uXjVG8ul8Cw=/)
