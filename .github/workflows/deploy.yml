@@ -44,4 +44,4 @@ jobs:
         username: ${{ secrets.Username }}
         password: ${{ secrets.Password }}
         local-dir: ./publish/
-        server-dir: /
+        server-dir: /www/site1culina/
