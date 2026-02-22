@@ -1,0 +1,47 @@
+name: ASP.NET Core CI/CD
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build-and-deploy:
+    runs-on: windows-latest
+
+    steps:
+    # Repo-dan code çəkmək
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    # .NET SDK quraşdırmaq
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: '9.0.x'
+
+    # Restore NuGet paketləri
+    - name: Restore dependencies
+      run: dotnet restore
+
+    # Build
+    - name: Build
+      run: dotnet build --configuration Release --no-restore
+
+    # Test (optional)
+    #- name: Run tests
+    #  run: dotnet test --no-build --verbosity normal
+
+    # Publish (artifact yaratmaq)
+    - name: Publish
+      run: dotnet publish -c Release -o ./publish
+
+    # Deploy to server (IIS / remote)
+    - name: Deploy to Smarter server
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+      with:
+        server: ***
+        username: ***
+        password: ***
+        local-dir: ./publish/
+        server-dir: /
