@@ -40,8 +40,8 @@ jobs:
     - name: Deploy to Smarter server
       uses: SamKirkland/FTP-Deploy-Action@v4.3.4
       with:
-        server: ***
-        username: ***
-        password: ***
+        server: ${{ secrets.ServerIp }}
+        username: ${{ secrets.Username }}
+        password: ${{ secrets.Password }}
         local-dir: ./publish/
         server-dir: /
