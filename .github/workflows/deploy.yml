@@ -7,6 +7,7 @@ on:
 
 jobs:
   build-and-deploy:
+    if: contains(toLower(github.event.head_commit.message), 'deploy')
     runs-on: windows-latest
 
     steps:
