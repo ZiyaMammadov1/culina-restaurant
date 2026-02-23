@@ -36,7 +36,7 @@ jobs:
     # Test (optional)
     #- name: Run tests
     #  run: dotnet test --no-build --verbosity normal
-
+     
     # Publish (artifact yaratmaq)
     - name: Publish
       run: dotnet publish -c Release -o ./publish
