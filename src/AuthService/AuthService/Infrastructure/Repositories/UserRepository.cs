@@ -10,6 +10,7 @@ namespace AuthService.Infrastructure.Repositories
         private readonly CulinaDbContext _dbContext;
         private readonly IMapper _mapper;
 
+
         public UserRepository(CulinaDbContext dbContext, IMapper mapper)
         {
             _dbContext = dbContext;
@@ -20,7 +21,7 @@ namespace AuthService.Infrastructure.Repositories
         {
             var userEntity = _mapper.Map<UserEntity>(user);
             await _dbContext.Users.AddAsync(userEntity, cancellationToken);
-            await SaveChangeAsync(cancellationToken);
+            await SaveChangeAsync(cancellationToken);  
         }
 
         public async Task SaveChangeAsync(CancellationToken cancellationToken)

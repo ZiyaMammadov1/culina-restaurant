@@ -1,5 +1,6 @@
 ﻿using AuthService.Application.Repositories;
 using AuthService.Domain.Entities;
+using MassTransit.Mediator;
 
 namespace AuthService.Application.Users
 {
@@ -8,10 +9,12 @@ namespace AuthService.Application.Users
     {
         private User _user;
         private readonly IUserRepository _userRepository;
+        private readonly IMediator _mediator;
 
-        public RegisterUser(IUserRepository userRepository)
+        public RegisterUser(IUserRepository userRepository, IMediator mediator)
         {
             _userRepository = userRepository;
+            _mediator = mediator;
         }
 
         public async Task<Result<User>> Do(string username, string password, string email, string address, CancellationToken cancellationToken)
@@ -22,7 +25,12 @@ namespace AuthService.Application.Users
 
             _user = userOrError.Value;
 
-            /*var addUserResult =*/ await _userRepository.AddUserAsync(_user, cancellationToken);
+            var domainEvents = _user.DomainEvents.ToList();
+            _user.ClearDomainEvents();
+
+            await _userRepository.AddUserAsync(_user, cancellationToken);
+
+            foreach (var domainEvent in domainEvents) await _mediator.Publish(domainEvent, cancellationToken);
 
             //if (addUserResult.IsFailed) return Result.Fail<User>(addUserResult.Errors);
 

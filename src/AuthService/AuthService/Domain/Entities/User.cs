@@ -1,7 +1,11 @@
-﻿namespace AuthService.Domain.Entities
+﻿using AuthService.Domain.Common;
+using AuthService.Domain.Events;
+
+namespace AuthService.Domain.Entities
 {
-    public class User
+    public class User : AggregateRoot
     {
+        public int id { get; }
         public Username username { get; }
         public Password password { get; }
         public Email email { get; }
@@ -22,7 +26,16 @@
             Result<Password> password = Password.Create(password_Str);
             if (password.IsFailed) return Result.Fail<User>(password.Errors);
 
-            return Result.Ok(new User(username.Value, password.Value, email.Value, address) { });
+            var user = new User(username.Value, password.Value, email.Value, address) { };
+
+            user.AddDomainEvent(new UserCreatedDomainEvent()
+            {
+                UserId = user.id,
+                Username = user.username.name,
+                Email = user.email.address,
+            });
+
+            return Result.Ok(user);
 
         }
     }
