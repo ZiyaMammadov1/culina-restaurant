@@ -71,7 +71,7 @@ Logging in this project is implemented using **SeriLog**, fully configurable via
 This setup ensures robust monitoring, quick debugging, and compliance with security best practices.
 
 ## <img width="25" height="25" alt="image" src="https://github.com/user-attachments/assets/5236f884-0956-4aff-b614-b28d8013496c" /> General Architecture
-[View Software Architecture Diagram on Miro](https://miro.com/app/board/uXjVG8ul8Cw=/)
+[View Software Architecture Diagram on Miro](https://miro.com/app/board/uXjVG8ul8Cw=/?share_link_id=60110831406)
 
 # CI/CD Pipeline
 
