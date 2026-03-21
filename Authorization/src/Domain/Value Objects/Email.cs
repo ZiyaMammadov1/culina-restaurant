@@ -6,7 +6,7 @@ namespace AuthService.Domain.Value_Objects
     {
         public string address { get; }
 
-        private Email(string address) { address = address; }
+        private Email(string address) => this.address = address;
 
         public const string EmailRegex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
 

@@ -1,40 +1,44 @@
-﻿using AuthService.Application.Repositories;
+﻿using Authorization.Application.Handlers.Commands;
+using AuthService.Application.Repositories;
 using AuthService.Domain.Entities;
-using MassTransit.Mediator;
+using MediatR;
 
 namespace AuthService.Application.Users
 {
 
-    public class RegisterUser
+    public class RegisterUserCommandHandler : IRequestHandler<RegisterUserCommand, Result<User>>
     {
-        private User _user;
         private readonly IUserRepository _userRepository;
         private readonly IMediator _mediator;
 
-        public RegisterUser(IUserRepository userRepository, IMediator mediator)
+        public RegisterUserCommandHandler(IUserRepository userRepository, IMediator mediator)
         {
             _userRepository = userRepository;
             _mediator = mediator;
         }
 
-        public async Task<Result<User>> Do(string username, string password, string email, string address, CancellationToken cancellationToken)
+        public async Task<Result<User>> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
         {
-            var userOrError = User.Create(username, password, email, address);
+            var userOrError = User.Create(
+                request.Username,
+                request.Password,
+                request.Email,
+                request.Address);
 
-            if (userOrError.IsFailed) return Result.Fail<User>(userOrError.Errors);
+            if (userOrError.IsFailed)
+                return Result.Fail<User>(userOrError.Errors);
 
-            _user = userOrError.Value;
+            var user = userOrError.Value;
 
-            var domainEvents = _user.DomainEvents.ToList();
-            _user.ClearDomainEvents();
+            var domainEvents = user.DomainEvents.ToList();
+            user.ClearDomainEvents();
 
-            await _userRepository.AddUserAsync(_user, cancellationToken);
+            await _userRepository.AddUserAsync(user, cancellationToken);
 
-            foreach (var domainEvent in domainEvents) await _mediator.Publish(domainEvent, cancellationToken);
+            foreach (var domainEvent in domainEvents)
+                await _mediator.Publish(domainEvent, cancellationToken);
 
-            //if (addUserResult.IsFailed) return Result.Fail<User>(addUserResult.Errors);
-
-            return Result.Ok(_user);
+            return Result.Ok(user);
         }
     }
 }

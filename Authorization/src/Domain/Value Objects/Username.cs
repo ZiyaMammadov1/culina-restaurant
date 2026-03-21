@@ -4,7 +4,7 @@
     {
         public string name { get; }
 
-        private Username(string name) { name = name; }
+        private Username(string name) => this.name = name;
 
         public static Result<Username> Create(string name)
         {

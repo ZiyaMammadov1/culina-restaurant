@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Hosting.Server;
+﻿using Authorization.Application.Handlers.Commands;
+using AuthService.Application.Users;
+using MediatR;
+using Microsoft.AspNetCore.Hosting.Server;
 using Microsoft.AspNetCore.Mvc;
 using System.Reflection;
 
@@ -8,29 +11,28 @@ namespace AuthService.Api.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        //private readonly ISender _sender = sender;
+        private readonly IMediator _mediator;
         private readonly ILogger<UserController> _logger;
 
-        public UserController(ILogger<UserController> logger)
+        public UserController(ILogger<UserController> logger, IMediator mediator)
         {
             _logger = logger;
+            _mediator = mediator;
         }
 
-        [HttpGet]
-         public IActionResult Get()
+        [HttpPost]
+        public async Task<IActionResult> RegisterUser([FromBody] RegisterUserCommand command)
         {
-            _logger.LogInformation("Request receiver");
-
-
-            var user = new
+            _logger.LogInformation("Received registration request for user {Username}", command.Username);
+            var result = await _mediator.Send(command);
+            if (result.IsFailed)
             {
-                Id = Guid.NewGuid(),
-                Name = "John Doe",
-                Email = "john.doe@gmail.coms"
-            };
-
-            _logger.LogInformation("Generated random user {@User}", user);
-            return Ok();
+                _logger.LogWarning("Registration failed for user {Username}: {Errors}", command.Username, result.Errors);
+                return BadRequest(result.Errors);
+            }
+            var user = result.Value;
+            _logger.LogInformation("User {Username} registered successfully with ID {UserId}", user.username, user.id);
+            return Ok(user);
         }
     }
 }

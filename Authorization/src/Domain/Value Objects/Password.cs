@@ -4,7 +4,7 @@
     {
         public string password { get; }
 
-        private Password(string password) { password = password; }
+        private Password(string password) { this.password = password; }
 
         public static Result<Password> Create(string password)
         {

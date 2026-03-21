@@ -13,7 +13,7 @@ namespace AuthService.Domain.Entities
         public DateTime CreadetDate { get; }
 
         private User(Username _username, Password _password, Email _email, string _address)
-        { username = _username; password = _password; email = _email; address = _address; }
+        { username = _username; password = _password; email = _email; address = _address; CreadetDate = DateTime.Now; }
 
         public static Result<User> Create(string username_Str, string password_Str, string email_Str, string address)
         {
