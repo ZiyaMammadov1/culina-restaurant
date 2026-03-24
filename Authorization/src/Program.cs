@@ -1,3 +1,4 @@
+﻿using AuthService.Application.IntegrationEvents;
 using AuthService.Application.Repositories;
 using AuthService.Application.Users;
 using AuthService.Infrastructure;
@@ -33,6 +34,12 @@ builder.Services.AddMassTransit(x =>
             h.Username(builder.Configuration["RabbitMQ:Username"]);
             h.Password(builder.Configuration["RabbitMQ:Password"]);
         });
+
+        cfg.ReceiveEndpoint("user-created-queue", exchange =>
+        {
+            exchange.Bind<UserCreatedIntegrationEvent>();
+            exchange.Durable = true;
+        });
     });
 });
 #endregion
@@ -58,9 +65,10 @@ builder.Services.AddAutoMapper(cfg => { cfg.AddProfile<UserMappingProfile>(); })
 
 var app = builder.Build();
 
-
+#region Middleware
 app.UseSerilogRequestLogging();
 app.UseMiddleware(typeof(CorrellationMiddleware));
+#endregion
 
 if (app.Environment.IsDevelopment())
 {
