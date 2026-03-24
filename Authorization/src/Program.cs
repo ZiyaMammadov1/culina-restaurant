@@ -40,6 +40,7 @@ builder.Services.AddMassTransit(x =>
             exchange.Bind<UserCreatedIntegrationEvent>();
             exchange.Durable = true;
         });
+
     });
 });
 #endregion
